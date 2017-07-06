@@ -14,19 +14,19 @@ import java.util.ArrayList;
 
 import stanford.androidlib.SimpleActivity;
 
-public class MainActivity extends SimpleActivity {
+public class MainActivity extends AppCompatActivity {
     private ArrayList<String> myList=new ArrayList<>();
-    private ArrayAdapter<String> myAdapter=null;
+    private MyAdapter myAdapter=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTraceLifecycle(true);
+        //setTraceLifecycle(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
     }
 
     public void enterToList(View view) {
-        EditText et=find(R.id.listItem);
+        EditText et=(EditText)findViewById(R.id.listItem);
         String item=et.getText().toString();
         if(item.length()>0){
             addToList(item);
@@ -42,13 +42,13 @@ public class MainActivity extends SimpleActivity {
 
     private void updateListAdapter(){
         if(myAdapter==null){
-            myAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,myList);
+            myAdapter=new MyAdapter(this,R.layout.custom_list_layout,myList);
         }else{
             myAdapter.notifyDataSetChanged();
         }
 
 
-        ListView lv=find(R.id.myList);
+        ListView lv=(ListView)findViewById(R.id.myList);
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
